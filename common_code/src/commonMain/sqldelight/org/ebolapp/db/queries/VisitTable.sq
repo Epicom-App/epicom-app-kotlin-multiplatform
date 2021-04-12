@@ -1,0 +1,46 @@
+selectAll:
+SELECT * FROM VisitTable;
+
+selectLastVisit:
+SELECT * FROM VisitTable
+ORDER BY id DESC LIMIT 1;
+
+selectFirstVisit:
+SELECT * FROM VisitTable
+ORDER BY id ASC LIMIT 1;
+
+selectVisitsBetweenTimestamps:
+SELECT * FROM VisitTable
+WHERE
+    ((startTimestampSec < :startTimestampSec AND endTimestampSec >= :startTimestampSec) OR
+    (startTimestampSec >= :startTimestampSec AND endTimestampSec <= :endTimestampSec) OR
+    (startTimestampSec <= :endTimestampSec AND endTimestampSec > :endTimestampSec) OR
+    (startTimestampSec < :startTimestampSec AND endTimestampSec > :endTimestampSec)) AND
+    (endTimestampSec - startTimestampSec) >= :durationSec;
+
+selectVisitBeforeVisitWithMinDuration:
+SELECT * FROM VisitTable
+WHERE id < :id AND (endTimestampSec - startTimestampSec) >= :durationSec
+ORDER BY id DESC LIMIT 1;
+
+insertVisit:
+INSERT INTO VisitTable
+    (lat, lon, startTimestampSec, endTimestampSec)
+VALUES
+    (?,?,?,?);
+
+updateVisit:
+UPDATE VisitTable
+SET
+    lat = :lat,
+    lon = :lon,
+    startTimestampSec = :startTimestampSec,
+    endTimestampSec = :endTimestampSec
+WHERE
+    id == :id;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM VisitTable
+WHERE endTimestampSec < ?;
+

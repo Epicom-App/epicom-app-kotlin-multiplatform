@@ -1,0 +1,6 @@
+CREATE TABLE StaticPagesCacheTable (
+    url TEXT NOT NULL,
+    content TEXT NOT NULL,
+    timestampSec INTEGER NOT NULL,
+    PRIMARY KEY (url)
+);

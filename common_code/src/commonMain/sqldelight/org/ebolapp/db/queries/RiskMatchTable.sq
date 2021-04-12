@@ -1,0 +1,24 @@
+selectAll:
+SELECT * FROM RiskMatchTable;
+
+selectRiskMatchForVisit:
+SELECT * FROM RiskMatchTable
+WHERE visitId == :visitId LIMIT 1;
+
+insertOrReplace:
+INSERT OR REPLACE INTO RiskMatchTable VALUES ?;
+
+selectForTimestamp:
+SELECT *
+FROM RiskMatchTable
+WHERE dayStartTimestampSec = ?;
+
+selectAllAfterTimestamp:
+SELECT *
+FROM RiskMatchTable
+WHERE dayStartTimestampSec >= ?;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM RiskMatchTable
+WHERE dayStartTimestampSec < ?;

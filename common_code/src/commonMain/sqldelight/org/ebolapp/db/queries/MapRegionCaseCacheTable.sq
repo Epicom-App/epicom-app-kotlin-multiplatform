@@ -1,0 +1,18 @@
+selectAll:
+SELECT * FROM MapRegionCaseCacheTable;
+
+deleteAll:
+DELETE FROM MapRegionCaseCacheTable;
+
+upsertTag:
+INSERT OR REPLACE INTO MapRegionCaseCacheTable VALUES ?;
+
+selectTag:
+SELECT * FROM MapRegionCaseCacheTable
+WHERE
+timestsampSec = :timestampSec;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM MapRegionCaseCacheTable
+WHERE timestsampSec < ?;

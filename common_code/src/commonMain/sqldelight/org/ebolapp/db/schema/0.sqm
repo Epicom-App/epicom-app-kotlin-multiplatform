@@ -1,0 +1,84 @@
+import java.lang.Double;
+import org.ebolapp.features.visits.entities.Visit;
+
+CREATE TABLE MapRegionCaseLegendTable (
+    name TEXT NOT NULL,
+    itemId INTEGER as Int NOT NULL PRIMARY KEY,
+    severity INTEGER as Int NOT NULL,
+    info TEXT,
+    color TEXT,
+    isRisky INTEGER
+);
+
+CREATE TABLE MapRegionCaseTable (
+    areaId TEXT NOT NULL,
+    severity INTEGER as Int NOT NULL,
+    numberOfCases REAL as Float NOT NULL,
+    timestsampSec INTEGER NOT NULL,
+
+    PRIMARY KEY (areaId,timestsampSec)
+);
+
+CREATE TABLE MapRegionCaseCacheTable (
+
+    timestsampSec INTEGER NOT NULL,
+    eEtag TEXT NOT NULL,
+
+    PRIMARY KEY (timestsampSec)
+);
+
+CREATE TABLE  MapRegionGeoRingTable(
+    regionId TEXT NOT NULL,
+    ringIndex INTEGER NOT NULL,
+    lat REAL NOT NULL,
+    lon REAL NOT NULL
+);
+
+CREATE TABLE MapRegionTable (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    parentId TEXT,
+    topLeftLat REAL AS Double,
+    topLeftLon REAL AS Double,
+    bottomRightLat REAL AS Double,
+    bottomRightLon REAL AS Double
+);
+
+CREATE TABLE RiskMatchCheckTable (
+    lastCheckTimestamp INTEGER NOT NULL
+);
+
+CREATE TABLE VisitTable (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  lat REAL NOT NULL,
+  lon REAL NOT NULL,
+  startTimestampSec INTEGER NOT NULL,
+  endTimestampSec INTEGER NOT NULL
+);
+
+CREATE TABLE UserLocationTable (
+  lat REAL NOT NULL,
+  lon REAL NOT NULL,
+  timestampSec INTEGER NOT NULL
+);
+
+CREATE TABLE RiskMatchTable (
+  regionId TEXT NOT NULL,
+  visitId INTEGER NOT NULL,
+  dayStartTimestampSec INTEGER NOT NULL,
+  visit TEXT AS Visit NOT NULL,
+  severity INTEGER NOT NULL,
+
+  PRIMARY KEY (regionId,visitId,dayStartTimestampSec)
+);
+
+CREATE TABLE RiskMatchNotificationTable (
+    regionId TEXT NOT NULL,
+    visitId INTEGER NOT NULL,
+    dayStartTimestampSec INTEGER NOT NULL,
+    handled INTEGER DEFAULT 0 NOT NULL,
+
+    FOREIGN KEY (regionId,visitId,dayStartTimestampSec)
+    REFERENCES RiskMatchTable (regionId,visitId,dayStartTimestampSec)
+    ON DELETE CASCADE
+);

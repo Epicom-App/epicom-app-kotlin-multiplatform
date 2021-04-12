@@ -1,0 +1,17 @@
+-- Migration from v1 to v2
+
+DELETE FROM MapRegionCaseLegendTable;
+ALTER TABLE MapRegionCaseLegendTable ADD COLUMN timestampSec INTEGER;
+
+DELETE FROM MapRegionCaseTable;
+ALTER TABLE MapRegionCaseTable ADD COLUMN stateId INTEGER;
+
+CREATE TABLE MapStatesCaseTable (
+    stateId INTEGER NOT NULL,
+    severity INTEGER as Int NOT NULL,
+    numberOfCases REAL as Float NOT NULL,
+    timestsampSec INTEGER NOT NULL,
+    informationUrl TEXT,
+
+    PRIMARY KEY (stateId,timestsampSec)
+);

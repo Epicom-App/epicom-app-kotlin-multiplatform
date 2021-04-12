@@ -1,0 +1,17 @@
+selectWithUrl:
+SELECT *
+FROM StaticPagesCacheTable
+WHERE url = ?;
+
+insertOrReplace:
+INSERT OR REPLACE INTO StaticPagesCacheTable VALUES ?;
+
+deleteWithUrl:
+DELETE
+FROM StaticPagesCacheTable
+WHERE url = ?;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM StaticPagesCacheTable
+WHERE timestampSec < ?;

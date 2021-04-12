@@ -1,0 +1,8 @@
+DROP TABLE RiskMatchNotificationTable;
+CREATE TABLE RiskMatchNotificationTable (
+    regionId TEXT NOT NULL,
+    visitId INTEGER NOT NULL,
+    dayStartTimestampSec INTEGER NOT NULL,
+    handled INTEGER DEFAULT 0 NOT NULL,
+    PRIMARY KEY (regionId,visitId,dayStartTimestampSec)
+);

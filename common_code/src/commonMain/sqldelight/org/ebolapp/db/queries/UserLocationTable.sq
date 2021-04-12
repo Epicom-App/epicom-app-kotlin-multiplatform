@@ -1,0 +1,22 @@
+selectAll:
+SELECT * FROM UserLocationTable;
+
+insertUserLocation:
+INSERT INTO UserLocationTable VALUES ?;
+
+selectBetweenTimestamps:
+SELECT *
+FROM UserLocationTable
+WHERE timestampSec BETWEEN ? AND ?;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM UserLocationTable
+WHERE timestampSec < ?;
+
+
+selectLastUserLocation:
+SELECT *
+FROM UserLocationTable
+ORDER BY timestampSec DESC
+LIMIT 1;

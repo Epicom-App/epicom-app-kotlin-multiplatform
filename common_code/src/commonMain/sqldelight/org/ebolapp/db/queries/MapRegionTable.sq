@@ -1,0 +1,51 @@
+import java.lang.Double;
+
+CREATE INDEX MapRegionTableIndex ON MapRegionTable(id,name,topLeftLat,topLeftLon,bottomRightLat,bottomRightLon);
+
+selectAll:
+SELECT * FROM MapRegionTable;
+
+selectMapRegionsWithParentId:
+SELECT *
+FROM MapRegionTable
+WHERE parentId = ?;
+
+selectMapRegionWithId:
+SELECT *
+FROM MapRegionTable
+WHERE id = ?;
+
+selectMapRegionsWithBox:
+SELECT *
+FROM MapRegionTable
+WHERE (:topLeftLon < bottomRightLon AND :bottomRightLon > topLeftLon AND
+       :topLeftLat > bottomRightLat AND :bottomRightLat < topLeftLat)
+AND ((:statesOnly == 1 AND parentId IS NULL) OR (:statesOnly == 0 AND parentId IS NOT NULL));
+
+selectMapRegionByPosition:
+SELECT *
+FROM MapRegionTable
+WHERE (:lat <= topLeftLat AND :lat >= bottomRightLat AND
+       :lon >= topLeftLon AND :lon <= bottomRightLon)
+AND (parentId IS NOT NULL);
+
+countParents:
+SELECT COUNT(*)
+FROM MapRegionTable
+WHERE parentId IS NULL;
+
+insertParent:
+INSERT INTO MapRegionTable (id, name, topLeftLat, topLeftLon, bottomRightLat, bottomRightLon)
+VALUES (?,?,?,?,?,?);
+
+countChildren:
+SELECT COUNT(*)
+FROM MapRegionTable
+WHERE parentId IS NOT NULL;
+
+insertChild:
+INSERT INTO MapRegionTable (id, name, parentId, topLeftLat, topLeftLon, bottomRightLat, bottomRightLon)
+VALUES (?,?,?,?,?,?,?);
+
+deleteAll:
+DELETE FROM MapRegionTable;

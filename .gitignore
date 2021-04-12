@@ -1,0 +1,10 @@
+# Android Profiling
+*.hprof
+
+build
+
+.gradle/
+
+.idea/
+
+local.properties

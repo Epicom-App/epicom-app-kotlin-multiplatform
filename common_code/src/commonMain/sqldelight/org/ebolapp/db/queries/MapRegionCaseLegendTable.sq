@@ -1,0 +1,10 @@
+insert:
+INSERT OR REPLACE INTO MapRegionCaseLegendTable
+VALUES (?,?,?,?,?,?,?);
+
+selectAllForTimestamp:
+SELECT * FROM MapRegionCaseLegendTable
+WHERE timestampSec = ?;
+
+deleteAll:
+DELETE FROM MapRegionCaseLegendTable;

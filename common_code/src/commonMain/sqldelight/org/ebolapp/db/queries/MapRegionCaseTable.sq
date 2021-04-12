@@ -1,0 +1,17 @@
+CREATE INDEX MapRegionCaseTableIndex ON MapRegionCaseTable(areaId,timestsampSec);
+
+selectAll:
+SELECT * FROM MapRegionCaseTable;
+
+insertRiskArea:
+INSERT OR REPLACE INTO MapRegionCaseTable VALUES (?,?,?,?,?,?);
+
+selectBetweenTimestamps:
+SELECT *
+FROM MapRegionCaseTable
+WHERE timestsampSec BETWEEN ? AND ?;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM MapRegionCaseTable
+WHERE timestsampSec < ?;

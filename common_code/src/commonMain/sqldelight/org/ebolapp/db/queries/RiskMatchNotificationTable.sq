@@ -1,0 +1,37 @@
+selectAll:
+SELECT * FROM RiskMatchNotificationTable;
+
+insertOrReplaceUnhandled:
+INSERT OR REPLACE
+INTO
+RiskMatchNotificationTable (regionId,visitId,dayStartTimestampSec,handled)
+VALUES (:regionId,:visitId,:dayStartTimestampSec,0);
+
+selectCountOfRecordsWithVisitId:
+SELECT COUNT(*)
+FROM RiskMatchNotificationTable
+WHERE visitId = ?;
+
+selectAllUnhandled:
+SELECT rmt.*
+FROM
+RiskMatchTable AS rmt,
+RiskMatchNotificationTable AS rmnt
+WHERE
+rmt.regionId == rmnt.regionId AND
+rmt.visitId == rmnt.visitId AND
+rmt.dayStartTimestampSec == rmnt.dayStartTimestampSec AND
+rmnt.handled == 0;
+
+markAsHandled:
+UPDATE RiskMatchNotificationTable
+SET handled = 1
+WHERE
+regionId = :regionId AND
+visitId = :visitId AND
+dayStartTimestampSec = :dayStartTimestampSec;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM RiskMatchNotificationTable
+WHERE dayStartTimestampSec < ?;

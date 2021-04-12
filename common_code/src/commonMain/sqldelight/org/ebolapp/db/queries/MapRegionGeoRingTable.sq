@@ -1,0 +1,25 @@
+CREATE INDEX MapRegionGeoRingTableIndex ON MapRegionGeoRingTable(regionId,ringIndex);
+
+insertMapRegionGeoRing:
+INSERT INTO MapRegionGeoRingTable VALUES ?;
+
+selectMapRegionGeoRing:
+SELECT *
+FROM MapRegionGeoRingTable
+WHERE regionId = ?;
+
+selectAllMapRegionsGeoRings:
+SELECT *
+FROM MapRegionGeoRingTable;
+
+deleteMapRegionGeoRing:
+DELETE
+FROM MapRegionGeoRingTable
+WHERE regionId = ?;
+
+deleteAllMapRegionsGeoRings:
+DELETE
+FROM MapRegionGeoRingTable;
+
+deleteAll:
+DELETE FROM MapRegionGeoRingTable;

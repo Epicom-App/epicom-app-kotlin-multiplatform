@@ -1,0 +1,17 @@
+CREATE INDEX MapStatesCaseTableIndex ON MapStatesCaseTable(stateId,timestsampSec);
+
+selectAll:
+SELECT * FROM MapStatesCaseTable;
+
+insertMapStateCase:
+INSERT OR REPLACE INTO MapStatesCaseTable VALUES ?;
+
+selectBetweenTimestamps:
+SELECT *
+FROM MapStatesCaseTable
+WHERE timestsampSec BETWEEN ? AND ?;
+
+deleteAllBeforeTimestamp:
+DELETE
+FROM MapStatesCaseTable
+WHERE timestsampSec < ?;
